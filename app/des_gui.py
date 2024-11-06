@@ -259,4 +259,4 @@ class DesApp:
         about_label3.pack(pady=10)
         link_label = Label(about_window, text="Visit my GitHub", fg="blue", cursor="hand2", font=("Arial", 10, "underline"), bg="lightgray")
         link_label.pack(pady=5)
-        link_label.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/"))
+        link_label.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/nhanvatphu04/desdhti16a4_225not"))
