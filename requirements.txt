@@ -1,0 +1,1 @@
+# You can install "pyinstaller" to build an exe application to run on window
