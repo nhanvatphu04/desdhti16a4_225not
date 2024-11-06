@@ -2,6 +2,7 @@
 
 # Hexadecimal to binary conversion
 def hex2bin(s):
+	s = s.upper()
 	mp = {'0': "0000",
 		'1': "0001",
 		'2': "0010",
@@ -25,6 +26,10 @@ def hex2bin(s):
 
 # Binary to hexadecimal conversion
 def bin2hex(s):
+	if any(c not in '01' for c in s):
+		return "Invalid binary input. Please enter only '0' or '1'."
+	while len(s) % 4 != 0:
+		s = '0' + s
 	mp = {"0000": '0',
 		"0001": '1',
 		"0010": '2',

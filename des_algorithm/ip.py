@@ -1,4 +1,4 @@
-# des_algorithm/ip.py
+# ip.py
 
 IP_TABLE = [
     58, 50, 42, 34, 26, 18, 10, 2,
@@ -12,15 +12,6 @@ IP_TABLE = [
 ]
 
 def runIP(data):
-    """
-    Thực hiện Initial Permutation (IP) trên dữ liệu đầu vào 64-bit.
-
-    Parameters:
-    - data (str): Chuỗi nhị phân 64-bit cần hoán vị.
-
-    Returns:
-    - str: Chuỗi nhị phân 64-bit sau khi hoán vị theo IP_TABLE.
-    """
     if len(data) != 64:
         raise ValueError("Input data must be a 64-bit binary string.")
     elif not all(bit in '01' for bit in data):

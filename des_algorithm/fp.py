@@ -11,15 +11,6 @@ FP_TABLE = [
 ]
 
 def runFP(data):
-    """
-    Thực hiện Final Permutation (FP) trên dữ liệu đầu vào 64-bit.
-
-    Parameters:
-    - data (str): Chuỗi nhị phân 64-bit cần hoán vị.
-
-    Returns:
-    - str: Chuỗi nhị phân 64-bit sau khi hoán vị theo FP_TABLE.
-    """
     if len(data) != 64:
         raise ValueError("Input data must be a 64-bit binary string.")
     elif not all(bit in '01' for bit in data):

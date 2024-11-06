@@ -1,4 +1,5 @@
 # substitution.py
+
 from .utils import bin2dec, dec2bin
 S_BOXES = [
     [
@@ -52,15 +53,6 @@ S_BOXES = [
 ]
 
 def runSubstitution(data):
-    """
-    Áp dụng thay thế S-boxes trên chuỗi nhị phân 48-bit đầu vào.
-
-    Parameters:
-    - data (str): Chuỗi nhị phân 48-bit.
-
-    Returns:
-    - str: Chuỗi nhị phân 32-bit sau khi qua S-boxes.
-    """
     if len(data) != 48:
         raise ValueError("Input data must be a 48-bit binary string")
     elif not all(bit in '01' for bit in data):
@@ -68,7 +60,6 @@ def runSubstitution(data):
 
     output_32bit = ""
     for i in range(8):
-        # Lấy nhóm 6-bit cho mỗi S-box
         six_bits = data[i*6:(i+1)*6]
         row = bin2dec(six_bits[0] + six_bits[5])
         col = bin2dec(six_bits[1:5])

@@ -1,5 +1,5 @@
 # app/des_controller.py
-from des_algorithm import runIP, runFP, runExpansion, runGenKey, runSubstitution, runPermutation
+from des_algorithm import runIP, runFP, runExpansion, runGenKey, runSubstitution, runPermutation, runEncryption, runDecryption, bin2hex, hex2bin
 
 def executeIP(data):
     return runIP(data)
@@ -18,3 +18,15 @@ def executeSubstitution(data):
 
 def executePermutation(data):
     return runPermutation(data)
+
+def executeEncryption(data, key):
+    return runEncryption(data, key)
+
+def executeDecryption(data, key):
+    return runDecryption(data, key)
+
+def executeBin2Hex(data):
+    return bin2hex(data)
+
+def executeHex2Bin(data):
+    return hex2bin(data)

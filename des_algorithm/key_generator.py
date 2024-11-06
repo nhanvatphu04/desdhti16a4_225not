@@ -26,42 +26,12 @@ SHIFT_TABLE = [
 ]
 
 def permute(key, table, n):
-    """
-    Hoán vị các bit của key theo bảng cho sẵn.
-    
-    Parameters:
-    - key (str): Chuỗi nhị phân đầu vào.
-    - table (list): Bảng hoán vị.
-    - n (int): Độ dài chuỗi đầu ra.
-    
-    Returns:
-    - str: Chuỗi nhị phân sau khi hoán vị.
-    """
     return ''.join(key[table[i] - 1] for i in range(n))
 
 def shift_left(key, shifts):
-    """
-    Dịch vòng trái các bit trong chuỗi key.
-    
-    Parameters:
-    - key (str): Chuỗi nhị phân.
-    - shifts (int): Số lần dịch trái.
-    
-    Returns:
-    - str: Chuỗi nhị phân sau khi dịch trái.
-    """
     return key[shifts:] + key[:shifts]
 
 def runGenKey(key):
-    """
-    Tạo các khóa con cho 16 vòng của DES.
-    
-    Parameters:
-    - key (str): Chuỗi nhị phân 64-bit của khóa chính.
-
-    Returns:
-    - list: Danh sách các khóa con 48-bit cho từng vòng.
-    """
     if len(key) != 64:
         raise ValueError("Input key must be a 64-bit binary string.")
     elif not all(bit in '01' for bit in key):

@@ -9,15 +9,6 @@ EXPANSION_TABLE = [
 ]
 
 def runExpansion(data):
-    """
-    Thực hiện Expansion Permutation (E) để mở rộng 32-bit thành 48-bit.
-
-    Parameters:
-    - data (str): Chuỗi nhị phân 32-bit cần mở rộng.
-
-    Returns:
-    - str: Chuỗi nhị phân 48-bit sau khi mở rộng theo EXPANSION_TABLE.
-    """
     if len(data) != 32:
         raise ValueError("Input data must be a 32-bit binary string.")
     elif not all(bit in '01' for bit in data):
