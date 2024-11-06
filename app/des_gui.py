@@ -155,6 +155,7 @@ class DesApp:
         self.EDLabel.pack_forget()
         self.encrypt.place_forget()
         self.decrypt.place_forget()
+        self.xor.place_forget()
         self.EDInput_label.place_forget()
         self.EDInput_text.place_forget()
         self.EDKey_label.place_forget()
