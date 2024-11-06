@@ -1,5 +1,4 @@
 # key_generator.py
-
 PARITY_BIT_DROP_TABLE = [
     57, 49, 41, 33, 25, 17, 9,
     1, 58, 50, 42, 34, 26, 18,
@@ -29,6 +28,14 @@ def permute(key, table, n):
     return ''.join(key[table[i] - 1] for i in range(n))
 
 def shift_left(key, shifts):
+    if not all(bit in '01' for bit in key):
+        raise ValueError("Input key must be a 28-bit binary string composed of 0s and 1s.")
+    if len(key) == 0:
+        raise ValueError("Input data cannot be an empty string.")
+    if not isinstance(shifts, int) or shifts < 0:
+        raise ValueError("Shifts must be a non-negative integer.")
+    if shifts >= len(key):
+        raise ValueError("Shifts must be less than the length of the data.")
     return key[shifts:] + key[:shifts]
 
 def runGenKey(key):

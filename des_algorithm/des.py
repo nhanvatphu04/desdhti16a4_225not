@@ -2,7 +2,7 @@ from des_algorithm import runIP, runFP, runExpansion, runSubstitution, runPermut
 
 def runEncryption(plain_text, key):
     if len(plain_text) != 64 or len(key) != 64:
-        raise ValueError("Input and key must be 64-bit binary strings.")
+        raise ValueError('Input and key must be 64-bit binary strings.')
     
     round_keys = runGenKey(key)
     permuted_text = runIP(plain_text)
@@ -21,7 +21,7 @@ def runEncryption(plain_text, key):
 
 def runDecryption(cipher_text, key):
     if len(cipher_text) != 64 or len(key) != 64:
-        raise ValueError("Input and key must be 64-bit binary strings.")
+        raise ValueError('Input and key must be 64-bit binary strings.')
 
     round_keys = runGenKey(key)
     permuted_text = runIP(cipher_text)

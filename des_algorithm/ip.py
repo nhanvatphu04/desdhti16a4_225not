@@ -1,5 +1,4 @@
 # ip.py
-
 IP_TABLE = [
     58, 50, 42, 34, 26, 18, 10, 2,
     60, 52, 44, 36, 28, 20, 12, 4,
@@ -13,8 +12,8 @@ IP_TABLE = [
 
 def runIP(data):
     if len(data) != 64:
-        raise ValueError("Input data must be a 64-bit binary string.")
+        raise ValueError('Input data must be a 64-bit binary string.')
     elif not all(bit in '01' for bit in data):
-        raise ValueError("Input data must be a 64-bit binary string composed of 0s and 1s")
+        raise ValueError('Input data must be a 64-bit binary string composed of 0s and 1s')
     permuted_data = ''.join(data[IP_TABLE[i] - 1] for i in range(64))
     return permuted_data

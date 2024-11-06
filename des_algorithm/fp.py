@@ -12,8 +12,8 @@ FP_TABLE = [
 
 def runFP(data):
     if len(data) != 64:
-        raise ValueError("Input data must be a 64-bit binary string.")
+        raise ValueError('Input data must be a 64-bit binary string.')
     elif not all(bit in '01' for bit in data):
-        raise ValueError("Input data must be a 64-bit binary string composed of 0s and 1s")
+        raise ValueError('Input data must be a 64-bit binary string composed of 0s and 1s')
     permuted_data = ''.join(data[FP_TABLE[i] - 1] for i in range(64))
     return permuted_data

@@ -63,18 +63,21 @@ class DesApp:
         self.label2.place(x=10, y=70)
         self.version.place(x=470, y=380)
         # Tool attributes <IP, FP,...>
-        self.tool_output_text = Text(root, height=10, width=80, wrap='word', font=('Arial', 10))
-        self.tool_title_label = Label(root, font=('Arial', 14, 'bold'))
-        self.tool_input_label = Label(root, font=('Arial', 10))
-        self.tool_output_label = Label(root, font=('Arial', 10))
-        self.tool_input_text = Entry(root, width=80)
-        self.tool_run_btn = Button(root, text='Run', command=self.toolFunction)
+        self.tool_output_text = Text(self.root, height=10, width=80, wrap='word', font=('Arial', 10))
+        self.tool_title_label = Label(self.root, font=('Arial', 14, 'bold'))
+        self.tool_input_label = Label(self.root, font=('Arial', 10))
+        self.tool_output_label = Label(self.root, font=('Arial', 10))
+        self.tool_input_text = Entry(self.root, width=80)
+        self.tool_run_btn = Button(self.root, text='Run', command=self.toolFunction)
+        self.tool_round_num_label = Label(self.root, font=('Arial', 10))
+        self.tool_round_num_text = Entry(self.root, width=15)
         # E & D attributes
         self.EDTextbox = Text(self.root, height=3, width=80, wrap='word', font=('Arial', 10))
         self.EDmode = tk.StringVar(value='encrypt')
         self.EDLabel = Label(self.root, text='Select Mode:', bg=COLOR['White'], font=('Arial', 16, 'bold'))
         self.encrypt = tk.Radiobutton(self.root, text='Encrypt', font=('Arial', 12), variable=self.EDmode, value='encrypt', bg=COLOR['White'])
         self.decrypt = tk.Radiobutton(self.root, text='Decrypt', font=('Arial', 12) ,variable=self.EDmode, value='decrypt', bg=COLOR['White'])
+        self.xor = tk.Radiobutton(self.root, text='XOR', font=('Arial', 12) ,variable=self.EDmode, value='xor', bg=COLOR['White'])
         self.EDInput_label = Label(self.root, text='Input Text (64-bit):', bg=COLOR['White'])
         self.EDInput_text = Entry(self.root, width=80)
         self.EDKey_label = Label(self.root, text='Key (64-bit)', bg=COLOR['White'])
@@ -92,9 +95,9 @@ class DesApp:
         self.con_run_btn = Button(self.root, text='Convert', command=self.convertFunction)
         self.con_refresh_btn = Button(self.root, text='Refresh', command=self.clearConDataFields)
         self.con_output_label = Label(self.root, text='Output:', bg=COLOR['White'])
-        self.con_textbox = Text(root, height=3, width=80, wrap='word', font=('Arial', 10))
+        self.con_textbox = Text(self.root, height=3, width=80, wrap='word', font=('Arial', 10))
         # Menu
-        self.menu_bar = tk.Menu(root)
+        self.menu_bar = tk.Menu(self.root)
         function_menu = tk.Menu(self.menu_bar, tearoff=0)
         function_menu.add_command(label='Initial Permutation (IP)', command=self.showIPScreen)
         function_menu.add_command(label='Final Permutation (FP)', command=self.showFPScreen)
@@ -102,18 +105,23 @@ class DesApp:
         function_menu.add_command(label='Key Generator', command=self.showKeyGeneratorScreen)
         function_menu.add_command(label='Permutation (P)', command=self.showPermutationScreen)
         function_menu.add_command(label='Substitution (S)', command=self.showSubstitutionScreen)
-        function_menu.add_command(label='Encrypt & Decrypt', command=self.showEDScreen)
+        function_menu.add_command(label='Encrypt & Decrypt & XOR', command=self.showEDScreen)
         function_menu.add_command(label='Conversion', command=self.showConversionScreen)
+        function_menu.add_command(label='Shift Left', command=self.showShiftLeftScreen)
+        function_menu.add_command(label='Split Data', command=self.showSplitScreen)
+        function_menu.add_command(label='Permuted Choice 1', command=self.showPC1SCreen)
+        function_menu.add_command(label='Permuted Choice 2', command=self.showPC2SCreen)
         about_menu = tk.Menu(self.menu_bar, tearoff=0)
         about_menu.add_command(label='About', command=self.showAbout)
         self.menu_bar.add_cascade(label='Options', menu=function_menu)
         self.menu_bar.add_cascade(label='About', menu=about_menu)
-        root.config(menu=self.menu_bar)
+        self.root.config(menu=self.menu_bar)
 
         self.current_function = None
 
     def clearToolDataFields(self):
         self.tool_input_text.delete(0, tk.END)
+        self.tool_round_num_text.delete(0, tk.END)
         self.tool_output_text.config(state='normal')
         self.tool_output_text.delete('1.0', tk.END)
         self.tool_output_text.config(state='disabled')
@@ -162,11 +170,14 @@ class DesApp:
         self.tool_title_label.place_forget()
         self.tool_input_label.place_forget()
         self.tool_input_text.place_forget()
+        self.tool_round_num_label.place_forget()
+        self.tool_round_num_text.place_forget()
         self.tool_run_btn.place_forget()
         self.tool_output_label.place_forget()
         self.tool_output_text.place_forget()
 
     def showIPScreen(self):
+        self.clearOtherWidget()
         self.clearToolDataFields()
         self.clearEDWidget()
         self.clearConWidget()
@@ -178,6 +189,7 @@ class DesApp:
         self.showTextBox()
 
     def showFPScreen(self):
+        self.clearOtherWidget()
         self.clearToolDataFields()
         self.clearEDWidget()
         self.clearConWidget()
@@ -189,6 +201,7 @@ class DesApp:
         self.showTextBox()
 
     def showExpansionScreen(self):
+        self.clearOtherWidget()
         self.clearToolDataFields()
         self.clearEDWidget()
         self.clearConWidget()
@@ -200,6 +213,7 @@ class DesApp:
         self.showTextBox()
 
     def showKeyGeneratorScreen(self):
+        self.clearOtherWidget()
         self.clearToolDataFields()
         self.clearEDWidget()
         self.clearConWidget()
@@ -211,6 +225,7 @@ class DesApp:
         self.showTextBox()
 
     def showPermutationScreen(self):
+        self.clearOtherWidget()
         self.clearToolDataFields()
         self.clearEDWidget()
         self.clearConWidget()
@@ -222,6 +237,7 @@ class DesApp:
         self.showTextBox()
 
     def showSubstitutionScreen(self):
+        self.clearOtherWidget()
         self.clearToolDataFields()
         self.clearEDWidget()
         self.clearConWidget()
@@ -232,16 +248,81 @@ class DesApp:
         self.showInputWidgets()
         self.showTextBox()
 
+    def showShiftLeftScreen(self):
+        self.clearOtherWidget()
+        self.clearToolDataFields()
+        self.clearEDWidget()
+        self.clearConWidget()
+        centerWidgetHorizontally(self.tool_run_btn, self.root)
+        centerWidgetHorizontally(self.tool_output_text, self.root)
+        self.current_function = 'SL'
+        self.tool_title_label.config(text='Shift Left')
+        self.tool_input_label.config(text='Input data:')
+        self.tool_round_num_label.config(text='Input round num:')
+        self.tool_output_label.config(text='Output:')
+        self.tool_title_label.place(x=260,y=40)
+        self.tool_input_label.place(y=70)
+        self.tool_input_text.config(width=60)
+        self.tool_input_text.place(x=50, y=100)
+        self.tool_run_btn.place(y=130)
+        self.tool_output_label.place(x=275, y=170)
+        self.tool_output_text.place(y=200)
+        self.tool_input_label.place(x=130)
+        self.tool_round_num_label.place(x=450, y=70)
+        self.tool_round_num_text.place(x=450, y=100)
+
+    def showSplitScreen(self):
+        self.clearOtherWidget()
+        self.clearToolDataFields()
+        self.clearEDWidget()
+        self.clearConWidget()
+        self.current_function = 'SD'
+        self.tool_title_label.config(text='Split Data')
+        self.tool_input_label.config(text='Input data:')
+        self.tool_output_label.config(text='Output:')
+        self.showInputWidgets()
+        self.showTextBox()
+
+    def showPC1SCreen(self):
+        self.clearOtherWidget()
+        self.clearToolDataFields()
+        self.clearEDWidget()
+        self.clearConWidget()
+        self.current_function = 'PC1'
+        self.tool_title_label.config(text='Permuted Choice 1')
+        self.tool_input_label.config(text='Input key:')
+        self.tool_output_label.config(text='Output:')
+        self.showInputWidgets()
+        self.showTextBox()
+
+    def showPC2SCreen(self):
+        self.clearOtherWidget()
+        self.clearToolDataFields()
+        self.clearEDWidget()
+        self.clearConWidget()
+        self.current_function = 'PC2'
+        self.tool_title_label.config(text='Permuted Choice 2')
+        self.tool_input_label.config(text='Input key:')
+        self.tool_output_label.config(text='Output:')
+        self.showInputWidgets()
+        self.showTextBox()
+
     def showEDScreen(self):
         self.clearOtherWidget()
         self.clearEDDataFields()
         self.clearConWidget()
         self.current_function = 'ED'
-        self.EDmode.trace_add('write', lambda *args: self.updateEDOuputLabel())
+        self.EDmode.trace_add('write', lambda *args: self.updateEDOutputLabel())
         self.createMode()
 
-    def updateEDOuputLabel(self):
+    def updateEDOutputLabel(self):
         self.EDOutput_label.config(text='Cipher Text:' if self.EDmode.get() == 'encrypt' else 'Plain Text:')
+        if self.EDmode.get() == 'xor':
+            self.EDInput_label.config(text='       Input Data A:')
+            self.EDKey_label.config(text='Input Data B:')
+        else:
+            self.EDInput_label.config(text='Input Text (64-bit):')
+            self.EDKey_label.config(text='Key (64-bit)')
 
     def showConversionScreen(self):
         self.clearOtherWidget()
@@ -288,6 +369,7 @@ class DesApp:
         self.EDLabel.pack(pady=40)
         self.encrypt.place(x=20, y=80)
         self.decrypt.place(x=20, y=110)
+        self.xor.place(x=150, y=80)
         self.EDInput_label.place(y=150)
         self.EDInput_text.place(y=180)
         self.EDKey_label.place(y=210)
@@ -305,6 +387,8 @@ class DesApp:
         try:
             if mode == 'encrypt':
                 result = des_controller.executeEncryption(data, key)
+            elif mode == 'xor':
+                result = des_controller.executeXOR(data, key)
             else:
                 result = des_controller.executeDecryption(data, key)
             self.EDTextbox.insert(tk.END, f'{result}')
@@ -332,6 +416,7 @@ class DesApp:
 
     def toolFunction(self):
         block_data = self.tool_input_text.get()
+        num = self.tool_round_num_text.get()
         self.tool_output_text.config(state='normal')
         self.tool_output_text.delete('1.0', tk.END)
         try:
@@ -353,6 +438,19 @@ class DesApp:
                 self.tool_output_text.insert(tk.END, f'{result}')
             elif self.current_function == 'P':
                 result = des_controller.executePermutation(block_data)
+                self.tool_output_text.insert(tk.END, f'{result}')
+            elif self.current_function == 'SL':
+                num = int(num)
+                result = des_controller.executeShiftLeft(block_data, num)
+                self.tool_output_text.insert(tk.END, f'{result}')
+            elif self.current_function == 'SD':
+                result = des_controller.executeSplit(block_data)
+                self.tool_output_text.insert(tk.END, f'{result}')
+            elif self.current_function == 'PC1':
+                result = des_controller.executePC1(block_data)
+                self.tool_output_text.insert(tk.END, f'{result}')
+            elif self.current_function == 'PC2':
+                result = des_controller.executePC2(block_data)
                 self.tool_output_text.insert(tk.END, f'{result}')
             else:
                 self.tool_output_text.insert(tk.END, 'Please select a function first')

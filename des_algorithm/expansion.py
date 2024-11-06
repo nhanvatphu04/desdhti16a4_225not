@@ -10,8 +10,8 @@ EXPANSION_TABLE = [
 
 def runExpansion(data):
     if len(data) != 32:
-        raise ValueError("Input data must be a 32-bit binary string.")
+        raise ValueError('Input data must be a 32-bit binary string.')
     elif not all(bit in '01' for bit in data):
-        raise ValueError("Input data must be a 64-bit binary string composed of 0s and 1s")
+        raise ValueError('Input data must be a 64-bit binary string composed of 0s and 1s')
     expanded_data = ''.join(data[EXPANSION_TABLE[i] - 1] for i in range(48))
     return expanded_data
