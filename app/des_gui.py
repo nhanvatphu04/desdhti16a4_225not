@@ -57,7 +57,7 @@ class DesApp:
         self.label1 = Label(self.root, text='DATA ENCRYPTION STANDARD MINI TOOL', font=('Arial', 16, 'bold'), bg=COLOR['White'], fg=COLOR['Blue'])
         self.label2 = Label(self.root, text=intro_text, justify='left', anchor='w', wraplength=(SCREENWIDTH - 10), font=('Arial', 12, 'bold'), bg=COLOR['White'])
         self.label3 = Label(self.root, text='There is nothing here!', justify='center', anchor='center', font=('Arial', 40), bg=COLOR['White'])
-        self.version = Label(self.root, text='Last update: Nov 6 2024', font=('Arial', 8), bg=COLOR['White'])
+        self.version = Label(self.root, text='Last update: Nov 17 2024', font=('Arial', 8), bg=COLOR['White'])
         self.label1.place(x=10, y=10)
         self.label3.place(x=40, y=220)
         self.label2.place(x=10, y=70)
