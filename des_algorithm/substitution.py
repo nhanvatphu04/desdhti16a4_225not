@@ -1,5 +1,4 @@
 # substitution.py
-from .utils import bin2dec, dec2bin
 S_BOXES = [
     [
         [14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7],
@@ -51,18 +50,15 @@ S_BOXES = [
     ]
 ]
 
-def runSubstitution(data):
-    if len(data) != 48:
-        raise ValueError('Input data must be a 48-bit binary string')
-    elif not all(bit in '01' for bit in data):
-        raise ValueError('Input data must be a 48-bit binary string composed of 0s and 1s')
+from .utils import validateNConvert, bin2dec, dec2bin
 
+def runSubstitution(data):
+    binary_data = validateNConvert(data, 48)
     output_32bit = ''
     for i in range(8):
-        six_bits = data[i*6:(i+1)*6]
+        six_bits = binary_data[i*6:(i+1)*6]
         row = bin2dec(six_bits[0] + six_bits[5])
         col = bin2dec(six_bits[1:5])
         sbox_value = S_BOXES[i][row][col]
         output_32bit += dec2bin(sbox_value, 4)
-
     return output_32bit

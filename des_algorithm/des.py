@@ -1,11 +1,12 @@
 from des_algorithm import runIP, runFP, runExpansion, runSubstitution, runPermutation, runGenKey
+from .utils import validateNConvert
 
 def runEncryption(plain_text, key):
-    if len(plain_text) != 64 or len(key) != 64:
-        raise ValueError('Input and key must be 64-bit binary strings.')
+    binary_text = validateNConvert(plain_text, 64)
+    binary_key = validateNConvert(key, 64)
     
-    round_keys = runGenKey(key)
-    permuted_text = runIP(plain_text)
+    round_keys = runGenKey(binary_key)
+    permuted_text = runIP(binary_text)
     left, right = permuted_text[:32], permuted_text[32:]
 
     for i in range(16):
@@ -20,11 +21,11 @@ def runEncryption(plain_text, key):
     return final_text
 
 def runDecryption(cipher_text, key):
-    if len(cipher_text) != 64 or len(key) != 64:
-        raise ValueError('Input and key must be 64-bit binary strings.')
-
-    round_keys = runGenKey(key)
-    permuted_text = runIP(cipher_text)
+    binary_text = validateNConvert(cipher_text, 64)
+    binary_key = validateNConvert(key, 64)
+    
+    round_keys = runGenKey(binary_key)
+    permuted_text = runIP(binary_text)
     left, right = permuted_text[:32], permuted_text[32:]
 
     for i in range(15, -1, -1):

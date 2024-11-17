@@ -10,11 +10,9 @@ P_TABLE = [
     22, 11, 4, 25
 ]
 
-def runPermutation(data):
-    if len(data) != 32:
-        raise ValueError('Input data must be a 32-bit binary string.')
-    elif not all(bit in '01' for bit in data):
-        raise ValueError('Input data must be a 32-bit binary string composed of 0s and 1s')
+from .utils import validateNConvert
 
-    permuted_data = ''.join(data[P_TABLE[i] - 1] for i in range(32))
+def runPermutation(data):
+    binary_data = validateNConvert(data, 32)
+    permuted_data = ''.join(binary_data[P_TABLE[i] - 1] for i in range(32))
     return permuted_data

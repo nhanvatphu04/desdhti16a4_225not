@@ -10,10 +10,9 @@ IP_TABLE = [
     63, 55, 47, 39, 31, 23, 15, 7
 ]
 
+from .utils import validateNConvert
+
 def runIP(data):
-    if len(data) != 64:
-        raise ValueError('Input data must be a 64-bit binary string.')
-    elif not all(bit in '01' for bit in data):
-        raise ValueError('Input data must be a 64-bit binary string composed of 0s and 1s')
-    permuted_data = ''.join(data[IP_TABLE[i] - 1] for i in range(64))
+    binary_data = validateNConvert(data, 64)
+    permuted_data = ''.join(binary_data[IP_TABLE[i] - 1] for i in range(64))
     return permuted_data

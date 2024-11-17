@@ -24,10 +24,13 @@ SHIFT_TABLE = [
     1, 2, 2, 2, 2, 2, 2, 1
 ]
 
+
+from .utils import validateNConvert
+
 def permute(key, table, n):
     return ''.join(key[table[i] - 1] for i in range(n))
 
-def shift_left(key, shifts):
+def shiftLeft(key, shifts):
     if not all(bit in '01' for bit in key):
         raise ValueError("Input key must be a 28-bit binary string composed of 0s and 1s.")
     if len(key) == 0:
@@ -38,23 +41,21 @@ def shift_left(key, shifts):
         raise ValueError("Shifts must be less than the length of the data.")
     return key[shifts:] + key[:shifts]
 
-def runGenKey(key):
-    if len(key) != 64:
-        raise ValueError("Input key must be a 64-bit binary string.")
-    elif not all(bit in '01' for bit in key):
-        raise ValueError("Input data must be a 64-bit binary string composed of 0s and 1s")
-    
-    key_56 = permute(key, PARITY_BIT_DROP_TABLE, 56)
+def runGenKey(key, output_format='bin'):
+    binary_key = validateNConvert(key, 64)
+    key_56 = permute(binary_key, PARITY_BIT_DROP_TABLE, 56)
     
     left = key_56[:28]
     right = key_56[28:]
     
     round_keys = []
     for shift in SHIFT_TABLE:
-        left = shift_left(left, shift)
-        right = shift_left(right, shift)
+        left = shiftLeft(left, shift)
+        right = shiftLeft(right, shift)
         combined_key = left + right
         round_key = permute(combined_key, KEY_COMPRESSION_TABLE, 48)
+        if output_format == 'hex':
+            round_key = hex(int(round_key, 2))[2:].zfill(12)
         round_keys.append(round_key)
     
     return round_keys

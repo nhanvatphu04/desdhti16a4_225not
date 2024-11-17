@@ -57,6 +57,7 @@ def bin2hex(s):
 
 	return hex
 
+# Author: Me
 # Binary to decimal conversion (accepts string input)
 def bin2dec(binary):
     return int(binary, 2)
@@ -65,3 +66,24 @@ def bin2dec(binary):
 def dec2bin(num, length=4):
     res = bin(num)[2:]
     return res.zfill(length)
+
+def validateNConvert(data, expected_binary_length):
+    """
+    Validates and converts input to binary format.
+    Accepts both binary and hex inputs.
+    Returns binary string if valid, raises ValueError if invalid.
+    """
+    if all(bit in '01' for bit in data):
+        if len(data) != expected_binary_length:
+            raise ValueError(f'Binary input must be {expected_binary_length}-bit long')
+        return data
+    if all(c in '0123456789ABCDEFabcdef' for c in data):
+        expected_hex_length = expected_binary_length // 4
+        if len(data) != expected_hex_length:
+            raise ValueError(f'Hex input must be {expected_hex_length} characters long')
+        try:
+            binary = hex2bin(data)
+            return binary
+        except:
+            raise ValueError('Invalid hex input')
+    raise ValueError('Input must be either binary or hexadecimal')
